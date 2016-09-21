@@ -11,9 +11,8 @@ sudo wget http://public-repo-1.hortonworks.com/HDP-SOLR-2.3-100/repos/ubuntu14/h
 sudo apt-get update
 sudo apt-get install lucidworks-hdpsearch
 ```
-<br>
 <br>Modify ownership to solr
-```sudo chown -R solr:solr /opt/lucidworks-hdpsearch/solr```
+<br>```sudo chown -R solr:solr /opt/lucidworks-hdpsearch/solr```
 <br>
 <br>Install Zookeeper
-```sudo apt-get install zookeeperd```
+<br>```sudo apt-get install zookeeperd```
