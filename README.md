@@ -16,3 +16,6 @@ sudo apt-get install lucidworks-hdpsearch
 <br>
 <br>Install Zookeeper
 <br>```sudo apt-get install zookeeperd```
+<br>
+<br>References:
+<br><a href="http://yonik.com/solr-tutorial/">Solr Tutorial - Dynamic Fields</a>
