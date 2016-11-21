@@ -18,4 +18,5 @@ sudo apt-get install lucidworks-hdpsearch
 <br>```sudo apt-get install zookeeperd```
 <br>
 <br>References:
+<br><a href="https://blogs.apache.org/nifi/entry/indexing_tweets_with_nifi_and">Indexing with NiFi and Solr</a>
 <br><a href="http://yonik.com/solr-tutorial/">Solr Tutorial - Dynamic Fields</a>
