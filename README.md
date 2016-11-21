@@ -24,7 +24,7 @@ sudo apt-get install lucidworks-hdpsearch
 <br>```./bin/solr stop```
 <br>
 <br>Create Collection:
-<br>```.bin/solr create -c <collection_name> -d data_driven_schema_configs -s 1 -rf 1 -p 8983```
+<br>```.bin/solr create -c collection_name -d data_driven_schema_configs -s 1 -rf 1 -p 8983```
 <br>-c indicates the name
 <br>-d is the config directory (located at ./solr/server/solr/configsets)
 <br>-s is the number of shards
