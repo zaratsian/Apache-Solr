@@ -23,6 +23,14 @@ sudo apt-get install lucidworks-hdpsearch
 <br>Stop:
 <br>```./bin/solr stop```
 <br>
+<br>Create Collection:
+<br>```.bin/solr create -c tweets -d tweet_configs -s 1 -rf 1 -p 8983```
+<br>-c indicates the name
+<br>-d is the config directory
+<br>-s is the number of shards
+<br>-rf is the replication factor
+<br>-p is the port at which Solr is running
+<br>
 <br>Delete Collection:
 <br>```./bin/solr delete -c collection_name```
 <br>
