@@ -18,13 +18,13 @@ sudo apt-get install lucidworks-hdpsearch
 <br>```sudo apt-get install zookeeperd```
 <br>
 <br>Start:
-<br>./bin/solr start -c -z <solr_host>
+<br>```./bin/solr start -c -z <solr_host>```
 <br>
 <br>Stop:
-<br>./bin/solr stop
+<br>```./bin/solr stop```
 <br>
 <br>Delete Collection:
-<br>./bin/solr delete -c collection_name
+<br>```./bin/solr delete -c collection_name```
 <br>
 <br>References:
 <br><a href="https://blogs.apache.org/nifi/entry/indexing_tweets_with_nifi_and">Indexing with NiFi and Solr</a>
