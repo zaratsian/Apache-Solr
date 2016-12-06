@@ -34,6 +34,27 @@ sudo apt-get install lucidworks-hdpsearch
 <br>Delete Collection:
 <br>```./bin/solr delete -c collection_name```
 <br>
+<br>Index Delimited File:
+<br>```./post -c clinical -params "separator=%7C" -type text/csv /clinicaltrials.txt```
+<br>
 <br>References:
 <br><a href="https://blogs.apache.org/nifi/entry/indexing_tweets_with_nifi_and">Indexing with NiFi and Solr</a>
 <br><a href="http://yonik.com/solr-tutorial/">Solr Tutorial - Dynamic Fields</a>
+<br>
+<br>
+```
+qt – Query handler for the request. Standard query handler is used if not specified.
+q – It is used to specify the query event.
+fq – Used to specify filter queries.
+sort – Used to sort the results in ascending or descending order.
+start, rows – start specifies the staring number of the result set. By default it is zero. rows specify the number of records to return.
+fl – Used to return selective fields.
+wt – Specifies the response format. Default is XML.
+indent – Setting to true makes the response more readable.
+debugQuery – Setting the parameter to true gives the debugging information as part of response.
+dismax –  To specify the dismax parser.
+edismax – To specify the edismax parser.
+facet – Setting to true enables the faceting.
+spatial – Used for geospatial searches.
+spellcheck – Setting to true help in searching similar terms.
+```
