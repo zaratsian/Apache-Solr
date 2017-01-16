@@ -34,8 +34,10 @@ sudo apt-get install lucidworks-hdpsearch
 <br>Delete Collection:
 <br>```./bin/solr delete -c collection_name```
 <br>
-<br>Index Delimited File:
-<br>```./post -c clinical -params "separator=%7C" -type text/csv /clinicaltrials.txt```
+<br>Indexing Data:
+<br>```./bin/post -c <collection_name> -params "separator=%7C" -type text/csv /clinicaltrials.txt```
+<br>```./bin/post -c <collection_name> /opt/data/my_pdf_documents/*.pdf```
+<br>
 <br>
 <br>References:
 <br><a href="https://blogs.apache.org/nifi/entry/indexing_tweets_with_nifi_and">Indexing with NiFi and Solr</a>
