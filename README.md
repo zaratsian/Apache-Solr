@@ -41,7 +41,8 @@ sudo apt-get install lucidworks-hdpsearch
 <br><a href="https://blogs.apache.org/nifi/entry/indexing_tweets_with_nifi_and">Indexing with NiFi and Solr</a>
 <br><a href="http://yonik.com/solr-tutorial/">Solr Tutorial - Dynamic Fields</a>
 <br><a href="https://hub.docker.com/_/solr/">Solr DockerHub</a>
-<br>
+<br><a href="https://lucidworks.com/blog/2015/08/17/securing-solr-basic-auth-permission-rules/">Solr Basic Authentication</a>
+<br><a href="https://community.hortonworks.com/articles/15159/securing-solr-collections-with-ranger-kerberos.html">Securing Solr Collections with Ranger and Kerberos</a>
 <br>
 ```
 qt – Query handler for the request. Standard query handler is used if not specified.
