@@ -17,8 +17,8 @@ sudo apt-get install lucidworks-hdpsearch
 <br>Install Zookeeper
 <br>```sudo apt-get install zookeeperd```
 <br>
-<br>Start:
-<br>```./bin/solr start -c -z <solr_host>```
+<br>Start in SolrCloud mode (use -c or -cloud):
+<br>```./bin/solr start -c -z <zkhost:zkport> -p 8983```
 <br>
 <br>Stop:
 <br>```./bin/solr stop```
