@@ -1,6 +1,6 @@
 <h3>Apache Solr</h3>
 <br>Install Oracle JDK 8
-<br>```sudo apt-get install oracle-java8-installer```
+<br><code>sudo apt-get install oracle-java8-installer</code>
 <br>
 <br>Install Solr - Lucidworks HDP Search
 <br>https://docs.hortonworks.com/HDPDocuments/HDP2/HDP-2.4.2/bk_hdp_search/content/ch_hdp-search-install.html
