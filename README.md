@@ -40,26 +40,26 @@ sudo apt-get install lucidworks-hdpsearch
 <br><code>./bin/post -c <collection_name> /opt/data/my_pdf_documents/*.pdf</code>
 <br>
 <br>
-<br>References:
+<br><b>References:</b>
 <br><a href="https://blogs.apache.org/nifi/entry/indexing_tweets_with_nifi_and">Indexing with NiFi and Solr</a>
 <br><a href="http://yonik.com/solr-tutorial/">Solr Tutorial - Dynamic Fields</a>
 <br><a href="https://hub.docker.com/_/solr/">Solr DockerHub</a>
 <br><a href="https://lucidworks.com/blog/2015/08/17/securing-solr-basic-auth-permission-rules/">Solr Basic Authentication</a>
 <br><a href="https://community.hortonworks.com/articles/15159/securing-solr-collections-with-ranger-kerberos.html">Securing Solr Collections with Ranger and Kerberos</a>
 <br>
-<code>
-qt – Query handler for the request. Standard query handler is used if not specified.
-q – It is used to specify the query event.
-fq – Used to specify filter queries.
-sort – Used to sort the results in ascending or descending order.
-start, rows – start specifies the staring number of the result set. By default it is zero. rows specify the number of records to return.
-fl – Used to return selective fields.
-wt – Specifies the response format. Default is XML.
-indent – Setting to true makes the response more readable.
-debugQuery – Setting the parameter to true gives the debugging information as part of response.
-dismax –  To specify the dismax parser.
-edismax – To specify the edismax parser.
-facet – Setting to true enables the faceting.
-spatial – Used for geospatial searches.
-spellcheck – Setting to true help in searching similar terms.
-</code>
+<br>
+<br>qt – Query handler for the request. Standard query handler is used if not specified.
+<br>q – It is used to specify the query event.
+<br>fq – Used to specify filter queries.
+<br>sort – Used to sort the results in ascending or descending order.
+<br>start, rows – start specifies the staring number of the result set. By default it is zero. rows specify the number of records to return.
+<br>fl – Used to return selective fields.
+<br>wt – Specifies the response format. Default is XML.
+<br>indent – Setting to true makes the response more readable.
+<br>debugQuery – Setting the parameter to true gives the debugging information as part of response.
+<br>dismax –  To specify the dismax parser.
+<br>edismax – To specify the edismax parser.
+<br>facet – Setting to true enables the faceting.
+<br>spatial – Used for geospatial searches.
+<br>spellcheck – Setting to true help in searching similar terms.
+
