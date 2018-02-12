@@ -11,6 +11,7 @@ sudo wget http://public-repo-1.hortonworks.com/HDP-SOLR-2.3-100/repos/ubuntu14/h
 sudo apt-get update
 sudo apt-get install lucidworks-hdpsearch
 </code>
+<br>
 <br>Modify ownership to solr
 <br><code>sudo chown -R solr:solr /opt/lucidworks-hdpsearch/solr</code>
 <br>
