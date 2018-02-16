@@ -46,14 +46,15 @@ sudo apt-get install lucidworks-hdpsearch
 <br><a href="https://hub.docker.com/_/solr/">Solr DockerHub</a>
 <br><a href="https://lucidworks.com/blog/2015/08/17/securing-solr-basic-auth-permission-rules/">Solr Basic Authentication</a>
 <br><a href="https://community.hortonworks.com/articles/15159/securing-solr-collections-with-ranger-kerberos.html">Securing Solr Collections with Ranger and Kerberos</a>
+<br><a href="http://archive.apache.org/dist/lucene/solr/ref-guide/apache-solr-ref-guide-5.5.pdf">Apache Solr 5.5 Documentation</a>
 <br>
 <br>
 <br>qt – Query handler for the request. Standard query handler is used if not specified.
-<br>q – It is used to specify the query event.
+<br>q – Query / Search Term(s)
 <br>fq – Used to specify filter queries.
 <br>sort – Used to sort the results in ascending or descending order.
 <br>start, rows – start specifies the staring number of the result set. By default it is zero. rows specify the number of records to return.
-<br>fl – Used to return selective fields.
+<br>fl – Used to return user-defined fields.
 <br>wt – Specifies the response format. Default is XML.
 <br>indent – Setting to true makes the response more readable.
 <br>debugQuery – Setting the parameter to true gives the debugging information as part of response.
@@ -61,5 +62,5 @@ sudo apt-get install lucidworks-hdpsearch
 <br>edismax – To specify the edismax parser.
 <br>facet – Setting to true enables the faceting.
 <br>spatial – Used for geospatial searches.
-<br>spellcheck – Setting to true help in searching similar terms.
+<br>spellcheck – Set to "true" help in searching similar terms.
 
