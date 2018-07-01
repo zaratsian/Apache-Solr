@@ -1,63 +1,48 @@
+# docker build -t solr containers/solr
+# docker run -it -d -p 8983:8983 -p 12181:2181 -p 18080:8080 -p 19999:9999 --hostname solr --net dev --name solr solr
+FROM centos:7.4.1708
 
-#######################################################################################################################
-#
-#   Build:      docker build -t hdp_search containers/hdp_search
-#
-#   Run:        docker run -it -d -p 8983:8983 -p 2181:2181 -p 18080:8080 -p 19999:9999 --hostname hdp_search --net dev --name hdp_search hdp_search
-#
-#######################################################################################################################
 
-FROM centos
+ARG JAVA_VERSION=java-1.8.0-openjdk-devel
+ARG SOLR_VERSION=6.6.4
+ARG MINICONDA_URL=https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
+ARG ZEPPELIN_VER=0.7.3
+ARG ZOOKEEPER_VER=3.4.12
 
-#######################################################################################################################
-#
-#   Dependancies
-#
-#######################################################################################################################
 
-RUN yum install -y java-1.8.0-openjdk-devel
+##########################################################################################
+#
+# Install Dependencies
+#
+##########################################################################################
+
+RUN yum install -y ${JAVA_VERSION}
 RUN echo "export JAVA_HOME=/usr/lib/jvm/java" >> /root/.bashrc
 
-RUN yum install -y epel-release
-RUN yum update -y
-
+RUN yum install -y net-tools
 RUN yum install -y wget
 RUN yum install -y unzip
-RUN yum install -y net-tools
 RUN yum install -y git
 
-#######################################################################################################################
+##########################################################################################
 #
-#   Install HDP Search (Solr 5.5)
+# Install Solr
 #
-#   Documentation:
-#   https://docs.hortonworks.com/HDPDocuments/HDP2/HDP-2.6.4/bk_solr-search-installation/content/ch_hdp-search-install-nonambari.html
-#   https://doc.lucidworks.com/lucidworks-hdpsearch/2.5/index.html
-#
-#######################################################################################################################
+##########################################################################################
 
-#######################################################################################################################
-#
-#   Solr (HDP Search)
-#
-#######################################################################################################################
+RUN wget http://archive.apache.org/dist/lucene/solr/${SOLR_VERSION}/solr-${SOLR_VERSION}.tgz -O /solr.tgz
+RUN tar -xzvf /solr.tgz
+RUN mv /solr-${SOLR_VERSION} /solr
 
-RUN rpm --import http://public-repo-1.hortonworks.com/HDP-SOLR-2.6-100/repos/centos7/RPM-GPG-KEY/RPM-GPG-KEY-Jenkins
-RUN wget http://public-repo-1.hortonworks.com/HDP-SOLR-2.6-100/repos/centos7/hdp-solr.repo -O /etc/yum.repos.d/hdp-solr.repo
-RUN yum install -y lucidworks-hdpsearch
-
-#RUN /opt/lucidworks-hdpsearch/solr/bin/solr start -c -z localhost:2181
-#RUN /opt/lucidworks-hdpsearch/solr/bin/solr create -c hwx_search -d data_driven_schema_configs -s 1 -rf 1 -p 8983
-
-#######################################################################################################################
+##########################################################################################
 #
-#   Zookeeper
+# Install Zookeeper
 #
-#######################################################################################################################
+##########################################################################################
 
-RUN wget http://www-eu.apache.org/dist/zookeeper/stable/zookeeper-3.4.10.tar.gz -O /zookeeper.tgz
+RUN wget http://www-eu.apache.org/dist/zookeeper/zookeeper-${ZOOKEEPER_VER}/zookeeper-${ZOOKEEPER_VER}.tar.gz -O /zookeeper.tgz
 RUN tar -xzvf /zookeeper.tgz
-RUN mv /zookeeper-3.4.10 /zookeeper
+RUN mv /zookeeper-${ZOOKEEPER_VER} /zookeeper
 RUN mkdir /zookeeper/data
 
 RUN echo "tickTime = 2000" >> /zookeeper/conf/zoo.cfg
@@ -66,34 +51,54 @@ RUN echo "clientPort = 2181" >> /zookeeper/conf/zoo.cfg
 RUN echo "initLimit = 5" >> /zookeeper/conf/zoo.cfg
 RUN echo "syncLimit = 2" >> /zookeeper/conf/zoo.cfg
 
-#RUN /zookeeper/bin/zkServer.sh start
-
-#######################################################################################################################
+##########################################################################################
 #
-#   Install Anaconda (and any required packages)
+# Install MiniConda
 #
-#######################################################################################################################
+##########################################################################################
 
-RUN curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py"
-RUN python get-pip.py
-RUN rm get-pip.py
-RUN yum -y install bzip2
-RUN wget https://repo.continuum.io/archive/Anaconda2-5.0.1-Linux-x86_64.sh -O /tmp/Anaconda2-5.0.1-Linux-x86_64.sh
-RUN chmod +x /tmp/Anaconda2-5.0.1-Linux-x86_64.sh
-RUN /tmp/Anaconda2-5.0.1-Linux-x86_64.sh -b -p /opt/anaconda2
-RUN echo 'export PATH="/opt/anaconda2/bin:$PATH"' >> ~/.bashrc
-RUN rm /tmp/Anaconda2-5.0.1-Linux-x86_64.sh
+RUN yum install -y bzip2
+RUN wget ${MINICONDA_URL} -O miniconda.sh -O /tmp/miniconda.sh
+RUN chmod +x /tmp/miniconda.sh
+RUN /tmp/miniconda.sh -b -p /opt/miniconda
+ENV PATH="/opt/miniconda/bin:$PATH"
 
-RUN pip install pysolr
+RUN /opt/miniconda/bin/conda install -c anaconda requests
+RUN /opt/miniconda/bin/conda install -c conda-forge pysolr
+RUN /opt/miniconda/bin/conda install -c conda-forge textblob
+RUN /opt/miniconda/bin/conda install -c conda-forge spacy
 
-#######################################################################################################################
+##########################################################################################
 #
-#   Assets
+# Install Zeppelin
 #
-#######################################################################################################################
+##########################################################################################
+
+RUN wget https://archive.apache.org/dist/zeppelin/zeppelin-${ZEPPELIN_VER}/zeppelin-${ZEPPELIN_VER}-bin-all.tgz -O /zeppelin.tgz
+RUN tar -xzvf zeppelin.tgz
+RUN mv zeppelin-${ZEPPELIN_VER}-bin-all /zeppelin
+RUN echo "export SPARK_HOME=/spark" >> /zeppelin/conf/zeppelin-env.sh
+RUN rm /zeppelin.tgz
+
+##########################################################################################
+#
+# Copy Assets
+#
+##########################################################################################
 
 ADD assets /assets
+ADD assets/start_solr.sh /start_solr.sh
+ADD assets/solr_cmds.txt /solr_cmds.txt
+ADD assets/start_zk.sh /start_zk.sh
 
+##########################################################################################
+#
+# Start Services
+#
+##########################################################################################
 
+#CMD /start_zk.sh
+#CMD /start_solr.sh
+#CMD /zeppelin/bin/zeppelin-daemon.sh start
 
 #ZEND
