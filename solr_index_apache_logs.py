@@ -16,6 +16,11 @@
 #   Solr 7.4 - http://lucene.apache.org/solr/guide/7_4/uploading-data-with-index-handlers.html
 #
 ################################################################################################################
+#
+#   Banana UI:  http://localhost:8983/solr/banana/index.html#/dashboard
+#   Github:     https://github.com/lucidworks/banana
+#
+################################################################################################################
 
 import sys,re
 import datetime,time
@@ -80,35 +85,35 @@ if __name__ == "__main__":
     # Get Apache Logs
     lines = load_apache_logs(filepath)
     
-for i,apache_log in enumerate(lines):
-    
-    try:
-        # Parse Apache Log log
-        parsed_log  = parse_apache_log(apache_log)
-        parsed_json = [
-            {
-                "id": datetime.datetime.now().strftime("%Y%m%d_%H%M%S_%f"),
-                "remote_host":          parsed_log[0],
-                "datetimestamp":        parsed_log[1],
-                "request_type":         parsed_log[2].split()[0],
-                "request_url":          parsed_log[2].split()[1],
-                "request_protocol":     parsed_log[2].split()[2],
-                "request_status_code":  parsed_log[3],
-                "payload_bytes":        parsed_log[4],
-                "referer":              parsed_log[5],
-                "user_agent":           parsed_log[6]
-            }
-        ]
+    for i,apache_log in enumerate(lines):
         
-        r = solr_add_json_record(collection_name, parsed_json)
+        try:
+            # Parse Apache Log log
+            parsed_log  = parse_apache_log(apache_log)
+            parsed_json = [
+                {
+                    "id": datetime.datetime.now().strftime("%Y%m%d_%H%M%S_%f"),
+                    "remote_host":          parsed_log[0],
+                    "datetimestamp":        datetime.datetime.strptime(parsed_log[1].split()[0], '%d/%b/%Y:%H:%M:%S').strftime('%Y-%m-%dT%H:%M:%S.000Z'),
+                    "request_type":         parsed_log[2].split()[0],
+                    "request_url":          parsed_log[2].split()[1],
+                    "request_protocol":     parsed_log[2].split()[2],
+                    "request_status_code":  parsed_log[3],
+                    "payload_bytes":        parsed_log[4],
+                    "referer":              parsed_log[5],
+                    "user_agent":           parsed_log[6]
+                }
+            ]
+            
+            r = solr_add_json_record(collection_name, parsed_json)
+            
+            if (i % 1000)==0 and r.status_code==200:  # Print status update every 1000 records
+                print('[ INFO ] Processed ' + str(i) + ' apache logs')
+            elif (r.status_code!=200):
+                print('[ WARNING ] Passed on record number ' + str(i) + ' with status code: ' + str(r.status_code))
         
-        if (i % 1000)==0 and r.status_code==200:  # Print status update every 1000 records
-            print('[ INFO ] Processed ' + str(i) + ' apache logs')
-        elif (r.status_code!=200):
-            print('[ WARNING ] Passed on record number ' + str(i) + ' with status code: ' + str(r.status_code))
-    
-    except:
-        print('[ WARNING ] Passed on record >> ' + str(apache_log))
+        except:
+            print('[ WARNING ] Passed on record >> ' + str(apache_log))
 
 
 # ZEND
