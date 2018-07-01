@@ -1,7 +1,7 @@
 <h3>Solr Apache Search Project</h3>
 This project shows to to index Apache Logs using <a href="http://lucene.apache.org/solr/">Solr</a>.
 <br>
-<br>Sample data can be found <a href="https://raw.githubusercontent.com/elastic/examples/master/Common%20Data%20Formats/apache_logs/apache_logs>here</a> (or generated from any of your Apache services):
+<br>Sample data can be found <a href="https://raw.githubusercontent.com/elastic/examples/master/Common%20Data%20Formats/apache_logs/apache_logs">here</a> (or generated from any of your Apache services):
 <br>
 <br><b>Included as part of this project:</b>
 <br>
