@@ -5,7 +5,7 @@ This project shows to to index Apache Logs using <a href="http://lucene.apache.o
 <br>
 <br><b>Included as part of this project:</b>
 <br>
-<br>1.)  Download, build and run the Docker container, which I've placed here.
+<br>1.)  Download, build and run the Docker container, which I've placed <a href="https://github.com/zaratsian/Apache-Solr/blob/master/Dockerfile">here</a>.
 <br>2.)  The included python script (solr_index_apache_logs.py), can be used to index the Apache Log file.
 <br>3.)  I've created a basic Banana UI Dashboard to search, visualize, and interact with the data
 <br>
