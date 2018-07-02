@@ -3,6 +3,9 @@
 #
 #   Solr Example - Parse Apache Logs and write to Solr
 #
+#   Usage: script.py <filepath_to_apache_log> <solr_hostname> <solr_collection>
+#   Usage: script.py /tmp/apache.log localhost hwx_search
+#
 ################################################################################################################
 #
 #   Create Collection 
@@ -32,15 +35,15 @@ import requests
 #
 ################################################################################################################
 
-def solr_delete_record(collection_name, id_to_delete):
-    solr_url = 'http://localhost:8983/solr/' + str(collection_name) + '/update?commit=true'
+def solr_delete_record(solr_hostname, solr_collection, id_to_delete):
+    solr_url = 'http://' + str(solr_hostname) + ':8983/solr/' + str(solr_collection) + '/update?commit=true'
     headers  = {'Content-Type': 'application/json', 'Accept': 'application/json'}
     response = requests.post(solr_url, headers=headers, json={ "delete":id_to_delete })
     return response
 
 
-def solr_add_json_record(collection_name, json_payload):
-    solr_url = 'http://localhost:8983/solr/' + str(collection_name) + '/update?commit=true'
+def solr_add_json_record(solr_hostname, solr_collection, json_payload):
+    solr_url = 'http://' + str(solr_hostname) + ':8983/solr/' + str(solr_collection) + '/update?commit=true'
     headers  = {'Content-Type': 'application/json', 'Accept': 'application/json'}
     response = requests.post(solr_url, headers=headers, json=json_payload)
     return response
@@ -66,7 +69,8 @@ def parse_apache_log(apache_log):
     '83.149.9.216 - - [17/May/2015:10:05:03 +0000] "GET /presentations/logstash-monitorama-2013/images/kibana-search.png HTTP/1.1" 200 203023 "http://semicomplete.com/presentations/logstash-monitorama-2013/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1700.77 Safari/537.36"'
     '''
     # Apache Regex / Pattern
-    apache_regex = '([0-9\.]+) - - \[(.*?)\] \"(.*?)\" ([0-9]+) ([0-9]+) \"(.*?)\" \"(.*?)\"'
+    #apache_regex = '([0-9\.]+) - - \[(.*?)\] \"(.*?)\" ([0-9]+) ([0-9]+) \"(.*?)\" \"(.*?)\"'
+    apache_regex = '([0-9\.]+) - - \[(.*?)\] \"(.*?)\" ([0-9]+) (.*?) (.*?) \"(.*?)\"'
     parsed_log  = re.match(apache_regex, apache_log).groups()
     return parsed_log
 
@@ -79,8 +83,26 @@ def parse_apache_log(apache_log):
 
 if __name__ == "__main__":
     
-    filepath        = '/tmp/apache.log'
-    collection_name = 'hwx_search'
+    try:
+        filepath  = sys.argv[1]
+        #filepath = '/tmp/apache.log'
+    except:
+        print('[ ERROR ] Usage: script.py <filepath_to_apache_log> <solr_hostname> <solr_collection>')
+        sys.exit()
+    
+    try:
+        solr_hostname  = sys.argv[2]
+        #solr_hostname = 'localhost'
+    except:
+        print('[ ERROR ] Usage: script.py <filepath_to_apache_log> <solr_hostname> <solr_collection>')
+        sys.exit()
+    
+    try:
+        solr_collection  = sys.argv[3]
+        #solr_collection = 'apache_log_collection'
+    except:
+        print('[ ERROR ] Usage: script.py <filepath_to_apache_log> <solr_hostname> <solr_collection>')
+        sys.exit()
     
     # Get Apache Logs
     lines = load_apache_logs(filepath)
@@ -105,7 +127,7 @@ if __name__ == "__main__":
                 }
             ]
             
-            r = solr_add_json_record(collection_name, parsed_json)
+            r = solr_add_json_record(solr_hostname, solr_collection, parsed_json)
             
             if (i % 1000)==0 and r.status_code==200:  # Print status update every 1000 records
                 print('[ INFO ] Processed ' + str(i) + ' apache logs')
